@@ -45,6 +45,36 @@
     --safe-bot: env(safe-area-inset-bottom, 0px);
   }
 
+  /* ── DARK MODE TOKENS ── */
+  .dark {
+    --cream:    #141010;
+    --cream2:   #1E1915;
+    --cream3:   #29211A;
+    --ink:      #F0EAE0;
+    --ink2:     #D4CABC;
+    --ink3:     #8A7D6E;
+    --amber:    #E8A020;
+    --amber2:   #F0B030;
+    --amber-bg: #251D0A;
+    --amber-lt: #1E1608;
+    --green:    #6AAD5E;
+    --green-bg: #0F1F0D;
+    --red:      #E05555;
+    --red-bg:   #1F0D0D;
+    --pink:     #CC6E96;
+    --pink-bg:  #200D16;
+    --teal:     #4AADA0;
+    --teal-bg:  #0A1F1D;
+    --border:   rgba(240,234,224,0.1);
+    --border2:  rgba(240,234,224,0.18);
+  }
+
+  html, body, #app, .topbar, .tabbar, .bottomnav,
+  .card, .stat-box, .tabitem, .nav-item, .check-box,
+  .prog-track, .debt-track {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
   html, body {
@@ -103,6 +133,11 @@
     letter-spacing: 0.03em;
     font-weight: 400;
   }
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   .av {
     width: 34px;
     height: 34px;
@@ -116,6 +151,44 @@
     font-weight: 600;
     color: var(--amber);
     letter-spacing: 0.05em;
+  }
+
+  /* ── DARK MODE TOGGLE ── */
+  .theme-toggle {
+    width: 44px;
+    height: 26px;
+    border-radius: 99px;
+    background: var(--cream3);
+    border: 1px solid var(--border2);
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+  .theme-toggle .knob {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    line-height: 1;
+    transition: left 0.25s ease, background 0.25s ease;
+    user-select: none;
+  }
+  .dark .theme-toggle {
+    background: var(--amber-bg);
+    border-color: var(--amber);
+  }
+  .dark .theme-toggle .knob {
+    left: 20px;
+    background: var(--cream2);
   }
 
   /* ── TAB BAR ── */
@@ -481,7 +554,12 @@
       <div class="app-wordmark">dreaminwithori</div>
       <div class="app-sub">2026 master plan · Edmonton → 🌎</div>
     </div>
-    <div class="av">ORI</div>
+    <div class="topbar-right">
+      <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+        <div class="knob" id="knob">☀️</div>
+      </div>
+      <div class="av">ORI</div>
+    </div>
   </div>
 
   <!-- TAB BAR -->
@@ -1006,6 +1084,30 @@
 </div><!-- /app -->
 
 <script>
+  // ── DARK MODE ──
+  const root = document.documentElement;
+  const knob = document.getElementById('knob');
+
+  function applyTheme(dark) {
+    root.classList.toggle('dark', dark);
+    knob.textContent = dark ? '🌙' : '☀️';
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#141010' : '#F5F0E8');
+    try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch(e) {}
+  }
+
+  function toggleTheme() {
+    applyTheme(!root.classList.contains('dark'));
+  }
+
+  // Load saved preference, fallback to system preference
+  (function() {
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved) { applyTheme(saved === 'dark'); return; }
+    } catch(e) {}
+    applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
+  })();
+
   // ── TAB SWITCHING ──
   function switchTab(idx) {
     document.querySelectorAll('.tabitem').forEach((t, i) => t.classList.toggle('active', i === idx));
@@ -1050,6 +1152,28 @@
     e.preventDefault();
     deferredPrompt = e;
   });
+
+  // ── SWIPE TO SWITCH TABS ──
+  let touchStartX = 0;
+  let touchStartY = 0;
+  const body = document.querySelector('.body');
+
+  body.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  body.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    // Only trigger if horizontal swipe is dominant and long enough
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    const panels = document.querySelectorAll('.tab-panel');
+    let current = 0;
+    panels.forEach((p, i) => { if (p.classList.contains('active')) current = i; });
+    if (dx < 0 && current < panels.length - 1) switchTab(current + 1);
+    if (dx > 0 && current > 0) switchTab(current - 1);
+  }, { passive: true });
 
   // ── PREVENT PULL-TO-REFRESH ──
   document.addEventListener('touchmove', e => {
