@@ -225,7 +225,7 @@
     flex: 1;
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: 16px 16px 16px;
+    padding: 16px 16px max(env(safe-area-inset-bottom, 0px), 16px);
     scrollbar-width: none;
   }
   .body::-webkit-scrollbar { display: none; }
@@ -501,31 +501,33 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── BOTTOM NAV ── */
+  /* ── TOP NAV ── */
   .bottomnav {
     display: flex;
     background: var(--cream);
-    border-top: 1px solid var(--border);
-    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
     flex-shrink: 0;
   }
-  @media (display-mode: standalone) {
-    .bottomnav { padding-bottom: var(--safe-bot); }
-  }
+  .bottomnav::-webkit-scrollbar { display: none; }
   .nav-item {
     flex: 1;
+    min-width: 72px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 8px 4px 6px;
+    padding: 9px 6px 7px;
     cursor: pointer;
     user-select: none;
     gap: 3px;
     transition: opacity 0.15s;
+    border-bottom: 2px solid transparent;
   }
+  .nav-item.active { border-bottom-color: var(--amber); }
   .nav-item:active { opacity: 0.6; }
   .nav-icon {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1;
     transition: transform 0.15s;
   }
@@ -563,6 +565,16 @@
       </div>
       <div class="av">ORI</div>
     </div>
+  </div>
+
+  <!-- TOP NAV -->
+  <div class="bottomnav" id="bottomnav">
+    <div class="nav-item active" data-tab="0"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></div>
+    <div class="nav-item" data-tab="1"><div class="nav-icon">🎬</div><div class="nav-label">Content</div></div>
+    <div class="nav-item" data-tab="2"><div class="nav-icon">💼</div><div class="nav-label">Career</div></div>
+    <div class="nav-item" data-tab="3"><div class="nav-icon">💰</div><div class="nav-label">Finance</div></div>
+    <div class="nav-item" data-tab="4"><div class="nav-icon">🏃</div><div class="nav-label">Health</div></div>
+    <div class="nav-item" data-tab="5"><div class="nav-icon">🌍</div><div class="nav-label">Life</div></div>
   </div>
 
   <!-- SCROLL BODY -->
@@ -1063,16 +1075,6 @@
     </div>
 
   </div><!-- /body -->
-
-  <!-- BOTTOM NAV -->
-  <div class="bottomnav" id="bottomnav">
-    <div class="nav-item active" data-tab="0"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></div>
-    <div class="nav-item" data-tab="1"><div class="nav-icon">🎬</div><div class="nav-label">Content</div></div>
-    <div class="nav-item" data-tab="2"><div class="nav-icon">💼</div><div class="nav-label">Career</div></div>
-    <div class="nav-item" data-tab="3"><div class="nav-icon">💰</div><div class="nav-label">Finance</div></div>
-    <div class="nav-item" data-tab="4"><div class="nav-icon">🏃</div><div class="nav-label">Health</div></div>
-    <div class="nav-item" data-tab="5"><div class="nav-icon">🌍</div><div class="nav-label">Life</div></div>
-  </div>
 
 </div><!-- /app -->
 
