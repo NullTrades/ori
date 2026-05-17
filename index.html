@@ -47,26 +47,26 @@
 
   /* ── DARK MODE TOKENS ── */
   .dark {
-    --cream:    #141010;
-    --cream2:   #1E1915;
-    --cream3:   #29211A;
-    --ink:      #F0EAE0;
-    --ink2:     #D4CABC;
-    --ink3:     #8A7D6E;
-    --amber:    #E8A020;
-    --amber2:   #F0B030;
-    --amber-bg: #251D0A;
-    --amber-lt: #1E1608;
-    --green:    #6AAD5E;
-    --green-bg: #0F1F0D;
-    --red:      #E05555;
-    --red-bg:   #1F0D0D;
-    --pink:     #CC6E96;
-    --pink-bg:  #200D16;
-    --teal:     #4AADA0;
-    --teal-bg:  #0A1F1D;
-    --border:   rgba(240,234,224,0.1);
-    --border2:  rgba(240,234,224,0.18);
+    --cream:    #131110;
+    --cream2:   #201C17;
+    --cream3:   #2B2420;
+    --ink:      #F6F0E8;
+    --ink2:     #E0D8CA;
+    --ink3:     #AE9D8C;
+    --amber:    #F0AA28;
+    --amber2:   #F8C040;
+    --amber-bg: #2A1E08;
+    --amber-lt: #221809;
+    --green:    #74BC68;
+    --green-bg: #111F0F;
+    --red:      #E86666;
+    --red-bg:   #221010;
+    --pink:     #D47EA6;
+    --pink-bg:  #25101B;
+    --teal:     #55B8AA;
+    --teal-bg:  #0D2220;
+    --border:   rgba(246,240,232,0.1);
+    --border2:  rgba(246,240,232,0.2);
   }
 
   html, body, #app, .topbar, .tabbar, .bottomnav,
@@ -225,7 +225,7 @@
     flex: 1;
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: 16px 16px calc(var(--safe-bot) + 8px);
+    padding: 16px 16px 16px;
     scrollbar-width: none;
   }
   .body::-webkit-scrollbar { display: none; }
@@ -506,8 +506,11 @@
     display: flex;
     background: var(--cream);
     border-top: 1px solid var(--border);
-    padding-bottom: var(--safe-bot);
+    padding-bottom: 4px;
     flex-shrink: 0;
+  }
+  @media (display-mode: standalone) {
+    .bottomnav { padding-bottom: var(--safe-bot); }
   }
   .nav-item {
     flex: 1;
@@ -560,16 +563,6 @@
       </div>
       <div class="av">ORI</div>
     </div>
-  </div>
-
-  <!-- TAB BAR -->
-  <div class="tabbar" id="tabbar">
-    <div class="tabitem active" data-tab="0">🏠 Home</div>
-    <div class="tabitem" data-tab="1">🎬 Content</div>
-    <div class="tabitem" data-tab="2">💼 Career</div>
-    <div class="tabitem" data-tab="3">💰 Finance</div>
-    <div class="tabitem" data-tab="4">🏃 Health</div>
-    <div class="tabitem" data-tab="5">🌍 Life</div>
   </div>
 
   <!-- SCROLL BODY -->
@@ -1110,15 +1103,11 @@
 
   // ── TAB SWITCHING ──
   function switchTab(idx) {
-    document.querySelectorAll('.tabitem').forEach((t, i) => t.classList.toggle('active', i === idx));
     document.querySelectorAll('.tab-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
     document.querySelectorAll('.nav-item').forEach((n, i) => n.classList.toggle('active', i === idx));
     document.querySelector('.body').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  document.querySelectorAll('.tabitem').forEach(t => {
-    t.addEventListener('click', () => switchTab(+t.dataset.tab));
-  });
   document.querySelectorAll('.nav-item').forEach(n => {
     n.addEventListener('click', () => switchTab(+n.dataset.tab));
   });
