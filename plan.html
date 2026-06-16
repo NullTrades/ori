@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dreaminwithori — growth plan, Jul–Dec 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root{
+    --ink:#1B1420; --ink-soft:#6B5F70; --paper:#FAF6F2; --surface:#F3ECE5;
+    --line:rgba(27,20,32,.12); --line-soft:rgba(27,20,32,.07);
+    --accent:#D6336C; --accent-tint:#FBE4EC; --accent-ink:#8A1E45;
+    --film:#0F8A6B; --film-tint:#DFF3EC; --film-ink:#0A5C47;
+    --edit:#C2730A; --edit-tint:#FBEBD5; --edit-ink:#7C4906;
+    --display:'Bricolage Grotesque',sans-serif; --body:'Inter',sans-serif; --mono:'Space Mono',monospace;
+    --maxw:760px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.65;
+    -webkit-font-smoothing:antialiased;padding:0 22px 80px}
+  .page{max-width:var(--maxw);margin:0 auto}
+
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--accent-ink);
+    text-transform:lowercase;display:flex;align-items:center;gap:8px}
+  .eyebrow .num{color:var(--accent)}
+  h2{font-family:var(--display);font-weight:700;font-size:clamp(24px,6vw,32px);line-height:1.08;
+    letter-spacing:-.01em;margin:10px 0 14px}
+  h3{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 6px;letter-spacing:-.01em}
+  p{font-size:16px}
+  p+p{margin-top:12px}
+  em{font-style:normal;color:var(--accent);font-weight:500}
+  strong{font-weight:600}
+  a{color:var(--accent-ink)}
+
+  /* hero */
+  .hero{padding:64px 0 40px;border-bottom:1px solid var(--line)}
+  .hero .kick{font-family:var(--mono);font-size:12px;color:var(--ink-soft);letter-spacing:.02em;
+    text-transform:lowercase;margin-bottom:26px}
+  .hero h1{font-family:var(--display);font-weight:800;font-size:clamp(38px,11vw,68px);line-height:.98;
+    letter-spacing:-.025em;margin-bottom:22px}
+  .hero h1 .big{color:var(--ink)}
+  .hero h1 .small{color:var(--accent)}
+  .hero .lede{font-size:clamp(17px,2.6vw,20px);color:var(--ink);max-width:44ch;line-height:1.55}
+  .hero .lede em{color:var(--accent);font-weight:600}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+  .meta div{background:var(--surface);border-radius:12px;padding:10px 14px;min-width:96px}
+  .meta .l{font-family:var(--mono);font-size:11px;color:var(--ink-soft);text-transform:lowercase}
+  .meta .v{font-family:var(--display);font-weight:700;font-size:20px;margin-top:2px}
+
+  section{padding:42px 0;border-bottom:1px solid var(--line)}
+  .sec-head{margin-bottom:22px}
+
+  /* diagnosis */
+  .gap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:6px 0 0}
+  .stat{background:var(--surface);border-radius:14px;padding:18px}
+  .stat.hot{background:var(--accent-tint)}
+  .stat .l{font-family:var(--mono);font-size:11px;color:var(--ink-soft);text-transform:lowercase}
+  .stat .n{font-family:var(--display);font-weight:800;font-size:40px;line-height:1;margin:8px 0 4px}
+  .stat.hot .n{color:var(--accent)}
+  .stat .d{font-size:12.5px;color:var(--ink-soft)}
+
+  /* chart + milestones */
+  .chartwrap{position:relative;width:100%;height:260px;margin:8px 0 22px}
+  .miles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .mile{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+    padding:9px 13px;background:var(--surface);border-radius:10px}
+  .mile.stretch{background:var(--accent-tint)}
+  .mile .m{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  .mile .t{font-family:var(--display);font-weight:700;font-size:17px}
+  .mile.stretch .t{color:var(--accent)}
+  .note{margin-top:18px;padding:14px 16px;border-left:3px solid var(--accent);background:var(--accent-tint);
+    border-radius:0 10px 10px 0;font-size:14.5px}
+
+  /* pillars */
+  .pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:6px}
+  .pillar{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 17px}
+  .pillar .tag{font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:lowercase;margin-bottom:8px}
+  .pillar h3{font-size:18px}
+  .pillar p{font-size:13.5px;color:var(--ink-soft);margin-top:5px;line-height:1.5}
+
+  /* week */
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin:4px 0 16px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .swatch{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .week{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .drow{display:flex;gap:12px;align-items:flex-start;padding:13px 16px;border-bottom:1px solid var(--line-soft)}
+  .drow:last-child{border-bottom:none}
+  .drow:nth-child(even){background:var(--surface)}
+  .dname{font-family:var(--mono);font-weight:700;font-size:13px;width:42px;flex-shrink:0;padding-top:3px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-size:12px;padding:4px 11px;border-radius:8px;font-weight:500;white-space:nowrap}
+  .c-post{background:var(--accent-tint);color:var(--accent-ink)}
+  .c-film{background:var(--film-tint);color:var(--film-ink)}
+  .c-edit{background:var(--edit-tint);color:var(--edit-ink)}
+  .c-idle{background:var(--surface);color:var(--ink-soft)}
+
+  /* generic blocks */
+  .block{margin-top:20px}
+  .block:first-of-type{margin-top:4px}
+  .lead{font-size:15px;color:var(--ink-soft);margin-bottom:20px;max-width:58ch}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-top:12px}
+  .card h3{display:flex;align-items:center;gap:9px}
+  .card h3 .ix{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:400}
+  ul.clean{list-style:none;margin-top:10px}
+  ul.clean li{position:relative;padding:6px 0 6px 22px;font-size:14.5px;border-top:1px solid var(--line-soft)}
+  ul.clean li:first-child{border-top:none}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:14px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  ul.clean li b{font-weight:600}
+  .checklist{list-style:none}
+  .checklist li{display:flex;gap:11px;align-items:flex-start;padding:9px 0;font-size:14.5px;border-top:1px solid var(--line-soft)}
+  .checklist li:first-child{border-top:none}
+  .box{width:18px;height:18px;border:1.5px solid var(--accent);border-radius:5px;flex-shrink:0;margin-top:2px}
+  .phase{font-family:var(--mono);font-size:12px;color:var(--accent-ink);text-transform:lowercase;
+    margin:22px 0 4px;letter-spacing:.02em}
+  .footer{padding:40px 0 0;text-align:center;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+
+  @media (max-width:560px){
+    .gap,.pillars,.miles{grid-template-columns:1fr}
+    .pillars{grid-template-columns:1fr 1fr}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.in{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="hero">
+    <div class="kick">dreaminwithori · growth plan · jul–dec 2026</div>
+    <h1><span class="big">12,000 watched.</span><br><span class="small">Eight followed.</span></h1>
+    <p class="lede">Your reach already works — May proved it. This plan fixes everything that happens <em>after</em> the view, and points the whole machine at 10k by December.</p>
+    <div class="meta">
+      <div><div class="l">starting</div><div class="v">~870</div></div>
+      <div><div class="l">goal · dec 31</div><div class="v">10,000</div></div>
+      <div><div class="l">capacity</div><div class="v">10–20h/wk</div></div>
+    </div>
+  </header>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="num">00</span> — the diagnosis</div>
+      <h2>Reach isn't the problem. Conversion is.</h2>
+    </div>
+    <div class="gap">
+      <div class="stat hot">
+        <div class="l">may views</div>
+        <div class="n">12K</div>
+        <div class="d">+422% · 79% from non-followers</div>
+      </div>
+      <div class="stat">
+        <div class="l">followers gained</div>
+        <div class="n">~8</div>
+        <div class="d">per month</div>
+      </div>
+    </div>
+    <p style="margin-top:18px">In 2026, a view just means "interesting for a second." A follow means "I believe you'll deliver again." Those are different decisions — and the second one is won by three things you're not doing yet: <strong>familiarity</strong> (they've seen you 3–4 times, not once), <strong>a reason to come back</strong> (a recognizable show, not random one-offs), and <strong>a profile that closes the deal</strong> in two seconds. Everything below builds those.</p>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="num">01</span> — the climb</div>
+      <h2>870 → 10k, month by month</h2>
+    </div>
+    <div class="chartwrap">
+      <canvas id="climb" role="img" aria-label="Line chart of follower targets: about 870 now, 1000 July, 1800 August, 2800 September, 4200 October, 6500 November, with a dashed stretch to 10000 in December.">Targets — now: 870, Jul: 1,000, Aug: 1,800, Sep: 2,800, Oct: 4,200, Nov: 6,500, Dec: 10,000 (stretch).</canvas>
+    </div>
+    <div class="miles">
+      <div class="mile"><span class="m">jul</span><span class="t">1,000</span></div>
+      <div class="mile"><span class="m">aug</span><span class="t">1,800</span></div>
+      <div class="mile"><span class="m">sep</span><span class="t">2,800</span></div>
+      <div class="mile"><span class="m">oct</span><span class="t">4,200</span></div>
+      <div class="mile"><span class="m">nov</span><span class="t">6,500</span></div>
+      <div class="mile stretch"><span class="m">dec</span><span class="t">10,000</span></div>
+    </div>
+    <div class="note"><strong>Straight talk:</strong> disciplined posting alone lands you around 3–5k. The dashed jump to 10k needs one or two reels to genuinely break out (50k–500k views) — and nothing of yours has yet, so we don't pretend to know your breakout format. Finding it is the whole job of the trial engine. What you <em>do</em> know works is your carousels and photo dumps: those are your conversion engine (turning views into follows — your actual bottleneck), while reels chase the cold reach that breakouts come from.</div>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="num">02</span> — the show</div>
+      <h2>Four pillars, one personality</h2>
+    </div>
+    <p class="lead">Personality-led doesn't mean random. You need a few repeatable "shows" so the algorithm and viewers learn what you deliver. These came straight out of your quiz. Tech stays background seasoning for now.</p>
+    <div class="pillars">
+      <div class="pillar"><div class="tag">priority</div><h3>Takes</h3><p>Funny, sarcastic opinions — fashion, dating, personal care, productivity. The thing people already come to you for. Shot as selfie-cam reels: your reach engine.</p></div>
+      <div class="pillar"><div class="tag">proven</div><h3>Carousels &amp; fits</h3><p>Photo dumps, fit checks, style. Your genuinely proven format — it converts viewers into followers. Low-lift and authentic to you, so lean in.</p></div>
+      <div class="pillar"><div class="tag">familiarity</div><h3>Day-in-life</h3><p>Your favourite format. Gap-year vlogs build the parasocial closeness that converts viewers to followers.</p></div>
+      <div class="pillar"><div class="tag">experiment</div><h3>Concept / duo</h3><p>Duo bits and interactive ideas with your sister or friends. High ceiling but unproven for you — so test these as trial reels, don't bet on them.</p></div>
+    </div>
+    <div class="note" style="margin-top:18px"><strong>Format does a job, not a vibe:</strong> reels are how strangers find you (reach + the breakout shot), carousels are how they convert into followers (your proven strength, and the fix for your bottleneck), stories keep the people you already have. Run all three — don't make them compete.</div>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="num">03</span> — the cadence</div>
+      <h2>3 reels + 1 carousel + daily stories</h2>
+    </div>
+    <p class="lead">2+ reels a week grows followers multiples faster than feed-only; 4–5 touches a week builds the familiarity that converts. Posting windows below are starting points — override them in week one using Insights → most active times.</p>
+    <div class="legend">
+      <span><span class="swatch" style="background:var(--accent)"></span>post</span>
+      <span><span class="swatch" style="background:var(--film)"></span>film</span>
+      <span><span class="swatch" style="background:var(--edit)"></span>edit</span>
+    </div>
+    <div class="week">
+      <div class="drow"><div class="dname">mon</div><div class="chips"><span class="chip c-post">reel · take · 6–9pm</span><span class="chip c-edit">edit the take</span><span class="chip c-film">film wed fit</span></div></div>
+      <div class="drow"><div class="dname">tue</div><div class="chips"><span class="chip c-idle">stories</span><span class="chip c-edit">edit fit reel</span><span class="chip c-film">film thu photo</span></div></div>
+      <div class="drow"><div class="dname">wed</div><div class="chips"><span class="chip c-post">reel · fit · 12pm/6pm</span></div></div>
+      <div class="drow"><div class="dname">thu</div><div class="chips"><span class="chip c-post">carousel · 11am–1pm</span><span class="chip c-film">film fri concept</span><span class="chip c-edit">edit fri reel</span></div></div>
+      <div class="drow"><div class="dname">fri</div><div class="chips"><span class="chip c-post">reel · concept · 5–8pm</span></div></div>
+      <div class="drow"><div class="dname">sat</div><div class="chips"><span class="chip c-idle">stories</span><span class="chip c-film">film next mon take</span></div></div>
+      <div class="drow"><div class="dname">sun</div><div class="chips"><span class="chip c-idle">stories</span><span class="chip c-idle">15-min plan</span></div></div>
+    </div>
+    <div class="note"><strong>The one rule that holds it together:</strong> film a piece a day before you edit it; edit it the day before it posts. Stay one day ahead and you never scramble. Capture b-roll passively all week — that's vlog and story fuel with no scheduled shoot. Trial reels run on top, filmed in five minutes whenever an idea hits.</div>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow">the money format</div>
+      <h2>Repostable list-dumps</h2>
+    </div>
+    <p class="lead">Photo dump + text on screen, framed as a relatable list — "things I'm saying no to," "things I find attractive." This is the one that gets reposted to people's stories, which is how it reaches audiences you'd never touch. It also merges your Takes voice with your proven dump format. One rule above all: <em>specific + a little spicy + your voice.</em> Generic ("confidence, ambition, kindness") dies on arrival; oddly specific ("people who actually text back") gets sent to three friends.</p>
+    <ul class="clean">
+      <li><b>Cover = bait, not your best photo.</b> Its job is the title + stopping the scroll. Keep a real payoff line for the last slide so people swipe to the end — that's what re-serves it to non-followers.</li>
+      <li><b>Pair photo to line</b> where you can; otherwise keep the photos cohesive so it still feels like an effortless dump, not a stiff slideshow.</li>
+      <li><b>Caption invites the repost:</b> "send this to whoever needs to hear it," "save the reminder," "what's on your list 👇."</li>
+      <li><b>Build once, post twice:</b> the same set becomes a carousel (saves + conversion) <em>and</em> a reel with trending audio + the text (cold reach). One idea, both jobs.</li>
+    </ul>
+    <div class="card">
+      <h3>things i'm saying no to for the rest of my gap year</h3>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-top:6px;line-height:1.55">Timely, personal, relatable to every 20-something figuring it out. Cover line over a strong shot of you; funniest and most honest "no"s on slide 2 and the last slide. Caption: "which one are you also quitting? 👇"</p>
+    </div>
+    <div class="card">
+      <h3>things i find unreasonably attractive</h3>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-top:6px;line-height:1.55">Your idea, pushed toward specific-and-weird over generic. The more "why is this so true" each line is, the more it gets sent. Pair with aesthetic camera-roll shots. Caption: "send this to whoever needs to know."</p>
+    </div>
+    <div class="card">
+      <h3>ins &amp; outs for the rest of 2026</h3>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-top:6px;line-height:1.55">Classic repostable template, and mid-year timing is perfect. Your takes voice on each one — split-text cover, then ins on some slides, outs on others. Caption: "what's on your out list?"</p>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="num">04</span> — the look</div>
+      <h2>Lock it once, never decide again</h2>
+    </div>
+    <p class="lead">A "branded" feel is just the same look every single time. Build these once into a Premiere template and a matching CapCut preset so both outputs are identical. This is what makes a feed read as one creator.</p>
+
+    <div class="card">
+      <h3><span class="ix">a</span> Captions / subtitles</h3>
+      <ul class="clean">
+        <li><b>Font:</b> SF Pro Display is your pick — it lives under device fonts in iOS CapCut. Install it on the Mac (Apple's developer font pack) so Premiere matches exactly. Set one CapCut fallback and never touch it again.</li>
+        <li><b>Position:</b> centered, lower third, same size every time.</li>
+        <li><b>Style:</b> white fill, subtle dark stroke or soft shadow so it reads on any background. Burn captions in — don't rely on auto-captions (boosts sound-off watch time).</li>
+        <li><b>Accent:</b> one highlight colour for emphasis words, the same hue forever. It becomes part of your brand.</li>
+        <li><b>Animation:</b> one style — word-by-word karaoke highlight or a clean pop-in. Pick it, lock it.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="ix">b</span> Colour grade</h3>
+      <ul class="clean">
+        <li>You shoot Rec.709 — a clean neutral base. Build <b>one signature grade</b> (suggestion: gently warm, lifted shadows, soft contrast — flattering on skin, cosy-premium feel).</li>
+        <li><b>Premiere:</b> save it as a LUT + Lumetri preset; drop on every clip.</li>
+        <li><b>CapCut:</b> recreate as a saved Filter + Adjustment preset. Same white balance, same exposure target across phone and desktop.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><span class="ix">c</span> Premiere template &amp; covers</h3>
+      <ul class="clean">
+        <li>Extend your existing template: saved caption style, saved LUT, export preset (1080×1920, H.264, ~15–20 Mbps), audio normalised to about −14 LUFS so every video sounds the same.</li>
+        <li><b>One reel-cover template</b> — cover text in your locked font, same position, same colour, reused every time. Your grid is your conversion page; consistent covers are what flip a profile visitor into a follower.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="num">05</span> — the test engine</div>
+      <h2>Trial reels (live for you now)</h2>
+    </div>
+    <p class="lead">You've got the toggle, so this runs from day one — your way to test without ever risking the grid.</p>
+    <ul class="clean">
+      <li><b>What it does:</b> posts a reel to non-followers only; after a ~24–72h window you get data and can share winners to your feed (or let Instagram auto-share if it clears the threshold).</li>
+      <li><b>Run 2–3 trials a week</b> testing genuinely new ideas — separate from your scheduled feed reels. Think of them as auditions.</li>
+      <li><b>Share only the winners</b> to your real feed. The grid stays a highlight reel of bangers.</li>
+      <li><b>Compare trials only to other trials</b> — they get less reach by design (no follower head-start), so judging them against normal reels misleads you. An 800-view trial can be a winner.</li>
+      <li><b>Never re-upload old content</b> as a trial — 2026 penalises reposts platform-wide.</li>
+      <li><b>Change one variable per trial</b> (a hook, a pillar, talking-head vs concept). Let strangers vote, then promote winners into next week's feed slots.</li>
+    </ul>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="num">06</span> — close the deal</div>
+      <h2>Fix the profile (highest-ROI hour this week)</h2>
+    </div>
+    <p class="lead">This is where +8/month becomes +200/month. All of it in week one.</p>
+    <ul class="clean">
+      <li><b>Name field</b> (the bold searchable line): add keywords people search, e.g. <em>Ori · style &amp; daily life</em>. Search-driven visits convert higher than passive scrolling.</li>
+      <li><b>Bio:</b> one line of who you are + reason to follow, in plain words, on-brand funny. Make the payoff of following obvious.</li>
+      <li><b>Pin your top 3:</b> your best carousel + a strong fit + a take, so a visitor gets the show in five seconds.</li>
+      <li><b>PFP &amp; grid:</b> recognisable avatar, consistent covers + grade so it reads as one creator.</li>
+      <li><b>Reply to every comment and DM in the first hour</b> — boosts early signals and starts the relationship that turns a viewer into a follower.</li>
+    </ul>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="num">07</span> — make them stay</div>
+      <h2>Hooks, captions &amp; the reason to follow</h2>
+    </div>
+    <div class="block">
+      <h3>Hooks — first 1–3 seconds</h3>
+      <p style="margin-top:6px;color:var(--ink-soft);font-size:14.5px">Open a loop they have to stay to close, in your voice: <em>"The way people style this is a crime and I'm pressing charges…"</em> / <em>"Unpopular opinion but…"</em> / <em>"POV: you asked me about this so here's the unhinged truth…"</em> Lead with the payoff, not a slow intro.</p>
+    </div>
+    <div class="block">
+      <h3>Captions = SEO, not hashtags</h3>
+      <p style="margin-top:6px;color:var(--ink-soft);font-size:14.5px">Write keyword-rich captions in natural language — say what it's about in words people search. 3–5 hashtags max. End on a soft open loop, never "follow for more": <em>"part 2 tmrw," "tell me I'm wrong," "which one's worse 👇."</em></p>
+    </div>
+    <div class="block">
+      <h3>Name your series</h3>
+      <p style="margin-top:6px;color:var(--ink-soft);font-size:14.5px">A random funny take is a view; "episode 4 of the bit they're waiting for" is a follow. Name your recurring formats so people anticipate them — a series is a promise, and a promise is a reason to follow. End each with a teaser for the next.</p>
+    </div>
+  </section>
+
+  <section class="reveal">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="num">08</span> — feed the machine</div>
+      <h2>Monthly review · last Sunday, 30 min</h2>
+    </div>
+    <ul class="clean">
+      <li>Rank reels by <b>shares and saves</b>, not likes — those predict growth.</li>
+      <li>Find the top concept, top hook, top pillar. Next month: do more of exactly that. Kill what flopped twice.</li>
+      <li>Track the one metric that matters: <b>follows ÷ views trending up</b> — that's the conversion fix working.</li>
+    </ul>
+  </section>
+
+  <section class="reveal" style="border-bottom:none">
+    <div class="sec-head">
+      <div class="eyebrow"><span class="num">09</span> — start now</div>
+      <h2>Your first 14 days</h2>
+    </div>
+
+    <div class="phase">days 1–2 · setup (~2 hrs)</div>
+    <ul class="checklist">
+      <li><span class="box"></span><span>Fix profile: name field, bio, PFP</span></li>
+      <li><span class="box"></span><span>Lock caption spec + accent colour</span></li>
+      <li><span class="box"></span><span>Build the grade once → save Premiere LUT + CapCut preset</span></li>
+      <li><span class="box"></span><span>Build one reel-cover template</span></li>
+    </ul>
+
+    <div class="phase">days 3–7 · first real week</div>
+    <ul class="checklist">
+      <li><span class="box"></span><span>Film each reel a day ahead, edit the day before it posts</span></li>
+      <li><span class="box"></span><span>Post on the Mon/Wed/Fri schedule; run 1–2 trial reels</span></li>
+      <li><span class="box"></span><span>Pin your top 3 existing reels</span></li>
+      <li><span class="box"></span><span>Stories daily; reply to everything within the hour</span></li>
+      <li><span class="box"></span><span>Name your first series</span></li>
+    </ul>
+
+    <div class="phase">days 8–14</div>
+    <ul class="checklist">
+      <li><span class="box"></span><span>Check Insights → adjust posting windows to your real data</span></li>
+      <li><span class="box"></span><span>Read first trial results; promote winners into feed slots</span></li>
+      <li><span class="box"></span><span>Repeat; double down on whatever popped</span></li>
+    </ul>
+
+    <div class="note" style="margin-top:24px">Goal for two weeks: <strong>break the "sporadic" pattern</strong> and let the trial engine start telling you what works. Consistency is the whole game now — your reach already works. 1k is just the first checkpoint on the way up.</div>
+  </section>
+
+  <div class="footer">study your north-stars (kirxdiaz · kwadwo · jellognu) for mechanics, not topics — their first 3 seconds, sign-offs, cadence. steal structure, not content.</div>
+
+</div>
+
+<script>
+(function(){
+  var line='#D6336C', ink='#6B5F70', grid='rgba(27,20,32,.08)';
+  new Chart(document.getElementById('climb'),{
+    type:'line',
+    data:{labels:['now','jul','aug','sep','oct','nov','dec'],
+      datasets:[
+        {data:[870,1000,1800,2800,4200,6500,null],borderColor:line,backgroundColor:line,tension:.3,pointRadius:4,pointHoverRadius:6,borderWidth:2.5},
+        {data:[null,null,null,null,null,6500,10000],borderColor:line,backgroundColor:line,borderDash:[6,4],tension:.3,pointRadius:4,pointHoverRadius:6,borderWidth:2.5}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.parsed.y?c.parsed.y.toLocaleString()+' followers':''}}}},
+      scales:{
+        y:{beginAtZero:true,ticks:{color:ink,font:{family:'Space Mono'},callback:function(v){return v>=1000?(v/1000)+'k':v}},grid:{color:grid}},
+        x:{ticks:{color:ink,font:{family:'Space Mono'}},grid:{display:false}}
+      }
+    }
+  });
+  if(matchMedia('(prefers-reduced-motion:no-preference)').matches){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  }
+})();
+</script>
+</body>
+</html>
